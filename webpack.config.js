@@ -4,8 +4,9 @@ const path = require('path');
 module.exports = {
   context: path.resolve(__dirname, 'client'),
   entry: [
+    'react-hot-loader/patch',
     'webpack-hot-middleware/client?__webpack_hmr&timeout=20000&reload=true',
-    './app'
+    './index'
   ],
   output: {
     path: path.resolve(__dirname, './build'),
@@ -18,10 +19,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['es2015', 'react']
-          }
+          loader: 'babel-loader'
         }
       }
     ]
