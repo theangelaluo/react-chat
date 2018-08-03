@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
 
 // Socket handler
 io.on('connection', socket => {
-  console.log('connected');
   socket.on('username', username => {
     if (!username || !username.trim()) {
       return socket.emit('errorMessage', 'No username!');
@@ -60,6 +59,16 @@ io.on('connection', socket => {
       });
     });
   });
+
+  socket.on('stop-typing', () => {
+    console.log('server received stop typing');
+    socket.to(socket.room).emit('stop-typing', socket.username);
+  })
+
+
+  socket.on('typing', () => {
+    socket.to(socket.room).emit('typing', socket.username);
+  })
 
   socket.on('message', message => {
     if (!socket.room) {
